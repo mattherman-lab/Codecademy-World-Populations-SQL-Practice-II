@@ -1,0 +1,57 @@
+SELECT *
+FROM countries
+LIMIT 5;
+
+SELECT *
+FROM population_years
+LIMIT 5;
+
+SELECT COUNT(*) AS 'Q3.Entries matching Africa'
+FROM countries
+WHERE continent	 = 'Africa';
+
+SELECT SUM(population_years.population) AS 'Q4.Ociania population in 2005'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.id
+WHERE continent = 'Oceania' 
+AND year = 2005;
+
+SELECT ROUND(AVG(population_years.population),2) AS'Q5.South America Population in 2003'
+FROM population_years
+JOIN countries
+	ON population_years.country_id = countries.id
+WHERE population_years.year = 2003
+	AND countries.continent = 'South America';
+
+SELECT population_years.population AS 'Q6. Smallest population in 2007', 
+countries.name
+FROM population_years
+JOIN countries
+ON population_years.country_id = countries.id
+WHERE population_years.year = 2007 AND population_years.population is not NULL
+ORDER BY population_years.population ASC
+LIMIT 1;
+
+SELECT ROUND(AVG (population_years.population), 2) AS 'Q7. Average population of Poland'
+FROM population_years
+JOIN countries
+ON population_years.country_id = countries.id
+WHERE name = 'Poland';
+
+SELECT COUNT(*) AS 'Q8 Countries with "The" in their name'
+FROM countries
+WHERE name LIKE '%The%';
+
+SELECT countries.continent,
+ROUND(SUM(population_years.population), 2) as 'Q9.Populationof each continent in 2010'
+FROM population_years
+JOIN countries
+	on population_years.country_id = countries.id
+WHERE year = 2010
+GROUP by countries.continent
+ORDER by 2 DESC;
+
+
+
+
